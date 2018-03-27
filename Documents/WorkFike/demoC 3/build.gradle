@@ -1,0 +1,164 @@
+//buildscript {
+//	ext {
+//		springBootVersion = '2.0.0.RELEASE'
+//	}
+//	repositories {
+//		mavenCentral()
+//	}
+//	dependencies {
+//		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+//	}
+//}
+//
+//apply plugin: 'java'
+//apply plugin: 'eclipse'
+//apply plugin: 'org.springframework.boot'
+//apply plugin: 'io.spring.dependency-management'
+//
+//group = 'com.example'
+//version = '0.0.1-SNAPSHOT'
+//sourceCompatibility = 1.8
+//
+//repositories {
+//	mavenCentral()
+//}
+//
+//
+//dependencies {
+//	compile('org.springframework.boot:spring-boot-starter')
+//	testCompile('org.springframework.boot:spring-boot-starter-test')
+//	compile 'org.springframework.boot:spring-boot-starter-web'
+//}
+
+///////////////////
+
+buildscript {
+
+	repositories {
+		mavenCentral()
+		jcenter()
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+	}
+
+	dependencies {
+		classpath "io.franzbecker:gradle-lombok:1.10"
+	}
+}
+
+plugins {
+	id 'java'
+	id 'eclipse'
+	id 'idea'
+	id 'org.springframework.boot' version '1.5.9.RELEASE'
+	id 'net.ltgt.apt' version '0.10' // lombok
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+	jcenter()
+}
+
+//if (project.convention.findPlugin(JavaPluginConvention)) {
+//	sourceSets.main.output.classesDir = new File(buildDir, "classes/main")
+//	sourceSets.test.output.classesDir = new File(buildDir, "classes/test")
+//}
+
+sourceSets {
+	main {
+		java {
+			srcDirs('out/production/classes/main/generated', 'out/production/classes/main/hk')
+		}
+		resources {
+			exclude('vue/**', 'static/upload/**')
+		}
+	}
+}
+
+idea {
+	module {
+		outputDir file('out/production/classes/main')
+		testOutputDir file('out/production/classes/test')
+	}
+}
+
+build.doLast {
+	File file = new File(projectDir, "/out")
+	if (file.exists()) {
+		file.deleteDir()
+	}
+}
+
+dependencies {
+	compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(dir:'lib',include:['*.jar'])
+
+	compile 'org.springframework.boot:spring-boot-starter-data-jpa'//必须编写datasource
+	compile 'org.springframework.boot:spring-boot-starter-security'//需要密码的
+	compile 'org.springframework.session:spring-session'//需要设置session的编码
+	//关于redis的包
+	compile 'org.springframework.boot:spring-boot-starter-data-redis'
+	//关于Spring的缓存的包
+	compile 'org.springframework.boot:spring-boot-starter-cache'
+	//关于web的包
+	compile 'org.springframework.boot:spring-boot-starter-web'
+	//关于aop面向切面编程的包
+	compile 'org.springframework.boot:spring-boot-starter-aop'
+
+	// 网页模板
+	// compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	compile "org.thymeleaf:thymeleaf:3.0.9.RELEASE"
+	compile "org.thymeleaf:thymeleaf-spring4:3.0.9.RELEASE"
+	compile "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.2.2"
+
+	compile 'com.github.ben-manes.caffeine:caffeine'
+	compile 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'
+	compile 'ch.qos.logback:logback-core:1.2.3'
+	compile 'ch.qos.logback:logback-classic:1.2.3'
+	compile 'ch.qos.logback:logback-access:1.2.3'
+	compile 'com.zaxxer:HikariCP:2.7.3'
+	compile 'p6spy:p6spy:3.6.0'
+
+	compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.9.0'
+	//HttpCline的包
+	compile 'org.apache.httpcomponents:httpclient:4.5.3'
+	compile 'commons-beanutils:commons-beanutils:1.9.3'
+	compile 'commons-io:commons-io:2.6'
+	compile 'org.apache.poi:poi:3.17'
+	compile 'org.apache.poi:poi-ooxml:3.17'
+	compile 'com.github.binarywang:weixin-java-mp:2.9.8.BETA'
+
+	// swagger
+	compile 'io.springfox:springfox-swagger2:2.7.0'
+	compile 'io.springfox:springfox-swagger-ui:2.7.0'
+
+	// jpa dsl
+	compile 'com.querydsl:querydsl-jpa:4.1.4'
+	compile 'com.querydsl:querydsl-apt:4.1.4:jpa'
+
+	//使用注解加载配置文件里的值，Value
+	compile 'org.projectlombok:lombok:1.16.18'
+
+	//jdbc包
+	runtime 'mysql:mysql-connector-java'
+
+	// test part
+	testCompile 'org.springframework.boot:spring-boot-starter-test'
+	testCompile 'org.springframework.security:spring-security-test'
+	testCompile 'org.assertj:assertj-core:3.8.0'
+	testCompile 'com.h2database:h2'
+
+	//fastJson的包
+	compile group: 'com.alibaba', name: 'fastjson', version: '1.2.36'
+//    compile group: 'joda-time', name: 'joda-time', version: '2.9.4'
+	// SpringBoot的热加载
+	compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '1.5.9.RELEASE'
+
+
+
+}
