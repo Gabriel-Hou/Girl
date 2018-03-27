@@ -43,6 +43,7 @@ public class CreateQRCode {
                 }
             }
         }
+        System.out.println("111");
 
         gs.dispose();
         bufferedImage.flush();

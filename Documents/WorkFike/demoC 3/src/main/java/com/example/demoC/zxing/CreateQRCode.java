@@ -39,6 +39,7 @@ public class CreateQRCode {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("找不到路径");
         }
 
 

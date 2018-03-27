@@ -1,5 +1,6 @@
 package com.example.demoC.qrcode;
 
+
 import jp.sourceforge.qrcode.QRCodeDecoder;
 
 import javax.imageio.ImageIO;
@@ -18,5 +19,7 @@ public class ReadQRCode {
         QRCodeDecoder codeDecoder=new QRCodeDecoder();
         String result=new String(codeDecoder.decode(new MyQRCodeImage(image)),"gb2312");
         System.out.println(result);
+        System.out.println("111");
+
     }
 }

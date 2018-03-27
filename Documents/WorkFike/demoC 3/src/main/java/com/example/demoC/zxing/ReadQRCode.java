@@ -31,9 +31,8 @@ public class ReadQRCode {
             System.out.println("二维码格式类型："+result.getBarcodeFormat());
         } catch (NotFoundException e) {
             e.printStackTrace();
-            System.out.println("找不到路径");
+
         }
     }
-
 
 }
