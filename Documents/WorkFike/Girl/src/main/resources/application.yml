@@ -1,0 +1,29 @@
+server:
+  port: 8080 #配置的参数：后必须加空格否则配置失败
+  context-path: /girl
+spring:
+  profiles:
+    active: dev #使用dev配置
+  datasource:
+    driver-class-name:
+    url:
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create #每次程序运行的时候都会创建一个空表，如果该表已存在会先删除
+      #update 第一次运行的时候会创建新表，但若表已存在，不会删除数据
+      #validate:会验证是否与表结构一致，不一致会报错
+    show-sql: true
+
+#在配置文件中定义的值通过@value("${变量名}")注解来注入属性值
+#如：cupSize: B-->调用：@value("${cupSize}")
+
+#在配置中使用配置
+#如：content: girl's cupSize is ${cupSize} -->调用：@value("${content}")
+
+#对对象配置属性
+#如：girl:
+#     cupSize: B
+#     age: 18
+#调用-->在专门的girlProperties类中加@ConfigurationProperties(prefix="girl(yml中配置的属性名)")注解，使用时加@component注解注入配置
+#不同环境使用不同配置
